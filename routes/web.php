@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/users', function () {
+	$users = User::orderBy('name')->get();
+
 	return view('users.index');
 });
