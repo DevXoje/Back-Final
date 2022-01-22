@@ -28,7 +28,7 @@ Route::get('/users', function () {
 Route::get('/', fn () => view('home'))->name('home');
 
 Route::resource('users', UserController::class)->except(['show']); /* ->only(['index', 'show', 'create', 'edit', 'destroy']);*/
-Route::get('/users/{post}', [UserController::class, 'show'])->name('users.show')->where('post', '[0-9]+');
+Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show')->where('user', '[0-9]+');
 
 Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');
 /* Route::get('/users/editTest/{id}', [UserController::class, 'editTest'])->name('users.edit_test');
