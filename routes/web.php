@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,12 @@ Route::get('/users', function () {
 
 	return view('users.index');
 });
+
+Route::get('/', fn () => view('home'))->name('home');
+
+Route::resource('users', UserController::class)->except(['show']); /* ->only(['index', 'show', 'create', 'edit', 'destroy']);*/
+Route::get('/users/{post}', [UserController::class, 'show'])->name('users.show')->where('post', '[0-9]+');
+
+Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');
+/* Route::get('/users/editTest/{id}', [UserController::class, 'editTest'])->name('users.edit_test');
+Route::get('/users/newTest', [PostContUserControllerroller::class, 'newTest'])->name('users.new_test'); */
