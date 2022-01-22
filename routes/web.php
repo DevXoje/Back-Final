@@ -19,15 +19,9 @@ Route::get('/', function () {
 	return view('welcome');
 });
 
-Route::get('/users', function () {
-	$users = User::orderBy('name')->get();
-
-	return view('users.index');
-});
-
 Route::get('/', fn () => view('home'))->name('home');
 
-Route::resource('users', UserController::class)->except(['show']); /* ->only(['index', 'show', 'create', 'edit', 'destroy']);*/
+Route::resource('users', UserController::class)->only(['index', 'update', 'store', 'destroy']);
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show')->where('user', '[0-9]+');
 
 Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');

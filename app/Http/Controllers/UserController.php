@@ -16,7 +16,7 @@ class UserController extends Controller
 	{
 		$users = User::all();
 
-		return view('users.index', compact('users'));
+		return $users;
 	}
 
 	/**
@@ -37,6 +37,13 @@ class UserController extends Controller
 	 */
 	public function store(Request $request)
 	{
+
+		$user = new User();
+		$user->name = $request->name;
+		$user->email = $request->email;
+		$user->password = $request->password;
+		$user->remember_token = $request->remember_token;
+		$user->save();
 		//
 	}
 
@@ -48,7 +55,8 @@ class UserController extends Controller
 	 */
 	public function show(User $user)
 	{
-		//
+		$userFinded = User::findOrFail($user->id);
+		return $userFinded;
 	}
 
 	/**
@@ -71,7 +79,14 @@ class UserController extends Controller
 	 */
 	public function update(Request $request, User $user)
 	{
-		//
+		$user = User::findOrFail($request->id);
+		$user->name = $request->name;
+		$user->email = $request->email;
+		$user->password = $request->password;
+		$user->remember_token = $request->remember_token;
+		$user->save();
+
+		return $user;
 	}
 
 	/**
@@ -82,6 +97,7 @@ class UserController extends Controller
 	 */
 	public function destroy(User $user)
 	{
-		//
+		$task = User::destroy($user->id);
+		return $task;
 	}
 }
