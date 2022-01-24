@@ -7,11 +7,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-	private $createCuserController;
-	public function __construct( $createCuserController)
-	{
-		$this->createCuserController = $createCuserController;
-	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -20,7 +16,7 @@ class UserController extends Controller
 	public function index()
 	{
 		$users = User::all();
-
+		User::record();
 		return $users;
 	}
 
