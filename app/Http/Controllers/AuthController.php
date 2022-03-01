@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\AuthEloquent;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
 
 	/**
@@ -15,8 +15,7 @@ class UserController extends Controller
 	 */
 	public function index()
 	{
-		$users = User::all();
-		User::record();
+		$users = AuthEloquent::all();
 		return $users;
 	}
 
@@ -39,7 +38,7 @@ class UserController extends Controller
 	public function store(Request $request)
 	{
 
-		$user = new User();
+		$user = new AuthEloquent();
 		$user->name = $request->name;
 		$user->email = $request->email;
 		$user->password = $request->password;
@@ -51,22 +50,22 @@ class UserController extends Controller
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  \App\Models\User  $user
+	 * @param  \App\Models\AuthEloquent  $user
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(User $user)
+	public function show(AuthEloquent $user)
 	{
-		$userFinded = User::findOrFail($user->id);
+		$userFinded = AuthEloquent::findOrFail($user->id);
 		return $userFinded;
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  \App\Models\User  $user
+	 * @param  \App\Models\AuthEloquent  $user
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(User $user)
+	public function edit(AuthEloquent $user)
 	{
 		//
 	}
@@ -75,12 +74,12 @@ class UserController extends Controller
 	 * Update the specified resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Models\User  $user
+	 * @param  \App\Models\AuthEloquent  $user
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, User $user)
+	public function update(Request $request, AuthEloquent $user)
 	{
-		$user = User::findOrFail($request->id);
+		$user = AuthEloquent::findOrFail($request->id);
 		$user->name = $request->name;
 		$user->email = $request->email;
 		$user->password = $request->password;
@@ -93,12 +92,12 @@ class UserController extends Controller
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  \App\Models\User  $user
+	 * @param  \App\Models\AuthEloquent  $user
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(User $user)
+	public function destroy(AuthEloquent $user)
 	{
-		$userDestroyed = User::destroy($user->id);
+		$userDestroyed = AuthEloquent::destroy($user->id);
 		return $userDestroyed;
 	}
 }

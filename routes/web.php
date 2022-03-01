@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\DeleteUserController;
 use App\Http\Controllers\GetUserController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UpdateUserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -18,21 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
 Route::get('/', function () {
 	return view('welcome');
 });
-
-Route::get('users', GetUserController::class)->name('users');
-/* Route::delete('users', DeleteUserController::class)->name('users.delete');
-Route::post('users/{id}', CreateUserController::class)->name('users.store');
-Route::post('users/{id}', UpdateUserController::class)->name('users.store');
- */
-
-/* Route::resource('users', UserController::class)->only(['index', 'update', 'store', 'destroy']);
-Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show')->where('user', '[0-9]+');
-
-Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete'); */
-/* Route::get('/users/editTest/{id}', [UserController::class, 'editTest'])->name('users.edit_test');
-Route::get('/users/newTest', [PostContUserControllerroller::class, 'newTest'])->name('users.new_test'); */

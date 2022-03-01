@@ -1,11 +1,11 @@
 <?php
 
-namespace BoundedContent\User\Domain;
+namespace BoundedContent\Auth\Domain;
 
 use BoundedContent\User\Domain\Events\UserWasCreatedDomainEvent;
 use BoundedContent\User\Domain\ValueObjects\{UserId, UserName, UserPassword};
 
-final class User
+final class Auth
 {
 	/**
 	 * The attributes that are mass assignable.
@@ -39,16 +39,16 @@ final class User
 	];
 
 
-	protected $table = "users";
+	static $table = "auth";
 
 	public function __construct()
 	{
 		# code...
 	}
-	public static function create(UserId $id, UserName $name, UserPassword $password): self
+	public static function create(int $id, string $name, string $password): self
 	{
 		$user = new self($id, $name, $password);
-		$user->record(new UserWasCreatedDomainEvent($id->value(), $name->value(), $password->value()));
+		$user->record(new UserWasCreatedDomainEvent($id, $name, $password));
 		return $user;
 	}
 	private function record(UserWasCreatedDomainEvent $event): void
