@@ -39,7 +39,6 @@ class LoginReq extends FormRequest
 	public function messages()
 	{
 		return [
-			'email.min' => 'The Title must be At Least 5 characters',
 			'password.required' => 'The Content is Required',
 		];
 	}
