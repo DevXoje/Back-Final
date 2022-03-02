@@ -20,5 +20,19 @@ Route::get('/', function () {
 	return view('welcome');
 });
 
-Route::get('auth', [AuthController::class, "index"])->name('auth');
+//Route::get('auth', [AuthController::class, "index"])->name('auth');
 Route::get('product', [ProductController::class, "index"])->name('product');
+
+Route::group([
+	'prefix' => 'auth'
+], function () {
+	Route::post('login', [AuthController::class, "login"]);
+	Route::post('signup', [AuthController::class, "signup"]);
+
+	Route::group([
+		'middleware' => 'auth:api'
+	], function () {
+		Route::get('logout', 'AuthController@logout');
+		Route::get('user', 'AuthController@user');
+	});
+});

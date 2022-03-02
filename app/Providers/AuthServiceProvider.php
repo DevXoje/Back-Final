@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Passport as Passport;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +26,8 @@ class AuthServiceProvider extends ServiceProvider
 	{
 		$this->registerPolicies();
 
-		//Passport::routes();
+		Passport::routes();
+
+		#Passport::loadKeysFrom(__DIR__ . '/../../se/.rnd');
 	}
 }

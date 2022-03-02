@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable
+class AuthEloquent extends Authenticatable
 {
 	use HasApiTokens, HasFactory, Notifiable;
 
@@ -28,4 +28,14 @@ class User extends Authenticatable
 	protected $casts = [
 		'email_verified_at' => 'datetime',
 	];
+	public function __construct()
+	{
+		# code...
+	}
+	public static function create(int $id, string $name, string $password): self
+	{
+		$user = new self($id, $name, $password);
+		//$user->record(new UserWasCreatedDomainEvent($id, $name, $password));
+		return $user;
+	}
 }

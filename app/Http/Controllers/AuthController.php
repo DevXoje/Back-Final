@@ -2,102 +2,84 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginReq;
+use App\Http\Requests\SignUpReq;
 use App\Models\AuthEloquent;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class AuthController extends Controller
 {
-
 	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
+	 * Registro de usuario
 	 */
-	public function index()
+	public function signUp(SignUpReq $request)
 	{
-		$users = AuthEloquent::all();
-		return $users;
+		#$request->validate();
+
+		$user = AuthEloquent::create(
+			$request->name,
+			$request->email,
+			bcrypt($request->password)
+		);
+		$accessToken = $user->createToken('authToken')->accessToken;
+
+
+
+		#return response()->json(['message' => 'Successfully created user!'], 201);
+		return response([
+			'user' => $user,
+			'access_tokken' => $accessToken,
+		]);
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
+	 * Inicio de sesión y creación de token
 	 */
-	public function create()
+	public function login(LoginReq $request)
 	{
-		//
+		#$request->validate();
+
+		$credentials = request(['email', 'password']);
+
+		if (!FacadesAuth::attempt($credentials))
+			return response()->json([
+				'message' => 'Unauthorized'
+			], 401);
+
+		$user = $request->user();
+		$tokenResult = $user->createToken('Personal Access Token');
+
+		$token = $tokenResult->token;
+		if ($request->remember_me)
+			$token->expires_at = Carbon::now()->addWeeks(1);
+		$token->save();
+
+		return response()->json([
+			'access_token' => $tokenResult->accessToken,
+			'token_type' => 'Bearer',
+			'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
+		]);
 	}
 
 	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
+	 * Cierre de sesión (anular el token)
 	 */
-	public function store(Request $request)
+	public function logout(Request $request)
 	{
+		$request->user()->token()->revoke();
 
-		$user = new AuthEloquent();
-		$user->name = $request->name;
-		$user->email = $request->email;
-		$user->password = $request->password;
-		$user->remember_token = $request->remember_token;
-		$user->save();
-		//
+		return response()->json([
+			'message' => 'Successfully logged out'
+		]);
 	}
 
 	/**
-	 * Display the specified resource.
-	 *
-	 * @param  \App\Models\AuthEloquent  $user
-	 * @return \Illuminate\Http\Response
+	 * Obtener el objeto User como json
 	 */
-	public function show(AuthEloquent $user)
+	public function user(Request $request)
 	{
-		$userFinded = AuthEloquent::findOrFail($user->id);
-		return $userFinded;
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  \App\Models\AuthEloquent  $user
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit(AuthEloquent $user)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Models\AuthEloquent  $user
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, AuthEloquent $user)
-	{
-		$user = AuthEloquent::findOrFail($request->id);
-		$user->name = $request->name;
-		$user->email = $request->email;
-		$user->password = $request->password;
-		$user->remember_token = $request->remember_token;
-		$user->save();
-
-		return $user;
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  \App\Models\AuthEloquent  $user
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy(AuthEloquent $user)
-	{
-		$userDestroyed = AuthEloquent::destroy($user->id);
-		return $userDestroyed;
+		return response()->json($request->user());
 	}
 }
