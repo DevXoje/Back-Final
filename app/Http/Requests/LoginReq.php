@@ -6,8 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LoginReq extends FormRequest
 {
-	var string $name, $email, $password;
-	var bool $remember_me;
+	var string $name, $email;
+	#var bool $remember_me;
 	/**
 	 * Determine if the user is authorized to make this request.
 	 *
@@ -26,9 +26,8 @@ class LoginReq extends FormRequest
 	public function rules()
 	{
 		return [
-			'email' => 'required|string|email',
+			'email' => 'required|string',
 			'password' => 'required|string',
-			'remember_me' => 'boolean'
 		];
 	}
 
@@ -40,7 +39,6 @@ class LoginReq extends FormRequest
 	public function messages()
 	{
 		return [
-			'name.required' => 'The Title is Required',
 			'email.min' => 'The Title must be At Least 5 characters',
 			'password.required' => 'The Content is Required',
 		];
