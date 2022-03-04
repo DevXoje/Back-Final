@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginReq;
 use App\Http\Requests\SignUpReq;
-use App\Models\AuthEloquent;
+use App\Infrastructure\Persistance\Auth\AuthEloquent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class AuthController extends Controller
 {
+	public function index()
+	{
+		return AuthEloquent::all();
+	}
 	/**
 	 * Registro de usuario
 	 */

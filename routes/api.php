@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+#use BoundedContent\Tienda\Product\Infrastructure\Eloquent\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,13 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-	return view('welcome');
+	return "<h1>Welcome to the API</h1>";
 });
 
-//Route::get('auth', [AuthController::class, "index"])->name('auth');
+Route::get('auth', [AuthController::class, "index"])->name('auth');
 Route::get('product', [ProductController::class, "index"])->name('product');
 
-Route::group([
+/* Route::group([
 	'prefix' => 'auth'
 ], function () {
 	Route::post('login', [AuthController::class, "login"]);
@@ -35,4 +36,4 @@ Route::group([
 		Route::get('logout', 'AuthController@logout');
 		Route::get('user', 'AuthController@user');
 	});
-});
+}); */

@@ -1,8 +1,8 @@
 <?php
 
-namespace BoundedContent\Auth\Domain;
+namespace App\Domain\Tienda\Auth;
 
-use BoundedContent\User\Domain\Events\UserWasCreatedDomainEvent;
+use App\Domain\Tienda\Auth\Events\AuthWasCreatedDomainEvent;
 use BoundedContent\User\Domain\ValueObjects\{UserId, UserName, UserPassword};
 
 final class Auth
@@ -48,10 +48,10 @@ final class Auth
 	public static function create(int $id, string $name, string $password): self
 	{
 		$user = new self($id, $name, $password);
-		$user->record(new UserWasCreatedDomainEvent($id, $name, $password));
+		$user->record(new AuthWasCreatedDomainEvent($id, $name, $password));
 		return $user;
 	}
-	private function record(UserWasCreatedDomainEvent $event): void
+	private function record(AuthWasCreatedDomainEvent $event): void
 	{
 		// $this->events->record($event);
 	}
