@@ -22,6 +22,8 @@ Route::get('/', function () {
 });
 
 Route::get('auth', [AuthController::class, "index"])->name('auth');
+Route::get('auth/{id}', [AuthController::class, "show"])->name('auth.show');
+Route::get('auth/', [AuthController::class, "index"])->name('auth');
 Route::get('product', [ProductController::class, "index"])->name('product');
 
 /* Route::group([

@@ -15,6 +15,10 @@ class AuthController extends Controller
 	{
 		return AuthEloquent::all();
 	}
+	public function show($id)
+	{
+		return AuthEloquent::find($id);
+	}
 	/**
 	 * Registro de usuario
 	 */
