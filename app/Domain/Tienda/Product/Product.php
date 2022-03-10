@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Tienda\Product;
+namespace App\Domain\Tienda;
 
 use App\Domain\Tienda\Product\Events\ProductWasCreatedDomainEvent;
 

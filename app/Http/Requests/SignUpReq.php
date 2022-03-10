@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SignUpReq extends FormRequest
 {
-	var string $name, $email, $password;
+	#var string $name, $email, $password;
 	/**
 	 * Determine if the user is authorized to make this request.
 	 *
@@ -26,7 +26,7 @@ class SignUpReq extends FormRequest
 	{
 		return [
 			'name' => 'required|string',
-			'email' => 'required|string|email|unique:users',
+			'email' => 'required|string|email|unique:auth',
 			'password' => 'required|string'
 		];
 	}

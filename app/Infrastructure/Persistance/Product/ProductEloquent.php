@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Persistance\Auth;
+namespace App\Infrastructure\Persistance\Product;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-final class AuthEloquent extends Authenticatable
+final class ProductEloquent extends Authenticatable
 {
 	use HasApiTokens, HasFactory, Notifiable;
-	protected $table = "auth";
+	protected $table = "product";
 	protected $primaryKey = "id";
 	public $incrementing = false;
 	protected $keyType = "string";

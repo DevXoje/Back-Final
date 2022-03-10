@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductEloquent;
+use App\Infrastructure\Persistance\Product\ProductEloquent;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -16,5 +16,10 @@ class ProductController extends Controller
 	{
 		$users = ProductEloquent::all();
 		return $users;
+	}
+
+	public function show($id)
+	{
+		return ProductEloquent::find($id);
 	}
 }
