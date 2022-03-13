@@ -6,7 +6,7 @@ namespace App\Infrastructure\Persistance\Auth;
 
 use App\Domain\Tienda\Auth\Auth;
 
-interface UserRepository
+interface AuthRepository
 {
 	public function save(Auth $user): void;
 	public function search(int $id): ?Auth;

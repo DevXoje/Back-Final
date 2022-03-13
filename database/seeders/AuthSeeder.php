@@ -16,20 +16,21 @@ class AuthSeeder extends Seeder
 	 */
 	public function run()
 	{
+
 		DB::table('auth')->insert(
 			[
-				'name' => Str::random(10),
-				'email' => Str::random(10) . '@gmail.com',
-				'password' => 'secret',
+				'name' => 'admin',
+				'email' => 'admin@gmail.com',
+				'password' => bcrypt('admin'),
 				'remember_token' => Str::random(10),
 				'role' => 'admin',
 			],
 		);
 		DB::table('auth')->insert(
 			[
-				'name' => Str::random(10),
-				'email' => Str::random(10) . '@gmail.com',
-				'password' => 'secret',
+				'name' => 'customer',
+				'email' => 'customer@gmail.com',
+				'password' => bcrypt('customer'),
 				'remember_token' => Str::random(10),
 				'role' => 'customer',
 			],

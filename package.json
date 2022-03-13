@@ -8,7 +8,8 @@
 		"hot": "mix watch --hot",
 		"prod": "npm run production",
 		"production": "mix --production",
-		"reset-db": "php artisan migrate:fresh --seed && php artisan passport:install --uuids --force",
+		
+		"reset-low-db": "php artisan migrate:fresh --seed",
 		"clean": "php artisan cache:clear && php artisan view:clear && php artisan config:clear && php artisan route:clear && php artisan clear-compiled"
 	},
 	"devDependencies": {

@@ -7,11 +7,11 @@ namespace App\Infrastructure\Persistance\Product;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+/* use Laravel\Passport\HasApiTokens; */
 
 final class ProductEloquent extends Authenticatable
 {
-	use HasApiTokens, HasFactory, Notifiable;
+	use /* HasApiTokens, */ HasFactory, Notifiable;
 	protected $table = "product";
 	protected $primaryKey = "id";
 	public $incrementing = false;

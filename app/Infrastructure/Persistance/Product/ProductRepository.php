@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistance\Product;
 
-use App\Domain\Tienda\Product\Product;
+use App\Domain\Tienda\Product;
 
 interface ProductRepository
 {

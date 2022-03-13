@@ -6,7 +6,7 @@ use App\Http\Requests\{LoginReq, SignUpReq};
 use App\Infrastructure\Persistance\Auth\AuthEloquent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -52,22 +52,33 @@ class AuthController extends Controller
 	/**
 	 * Inicio de sesión y creación de token
 	 */
-	public function login(LoginReq $request)
+	public function login(LoginReq $loginReq)
 	{
 		#$request->validate();
+		$credentials = $loginReq->only('email', 'password');
+		$message = "";
+		$code = 200;
 
-		$credentials = request(['email', 'password']);
+		if (Auth::attempt($credentials)) {
+			request()->session()->regenerate();
+			$message = "Successfully logged in";
+			$code = 200;
+		} else {
+			$message = "Error al iniciar sesión";
+			$code = 401;
+		}
+		return Auth::user();
 
-		if (!FacadesAuth::attempt($credentials))
+		/* if (!Auth::attempt($credentials))
 			return response()->json([
 				'message' => 'Unauthorized'
 			], 401);
 
-		$user = $request->user();
+		$user = $loginReq->user();
 		$tokenResult = $user->createToken('Personal Access Token');
 
 		$token = $tokenResult->token;
-		if ($request->remember_me)
+		if ($loginReq->remember_me)
 			$token->expires_at = Carbon::now()->addWeeks(1);
 		$token->save();
 
@@ -75,7 +86,7 @@ class AuthController extends Controller
 			'access_token' => $tokenResult->accessToken,
 			'token_type' => 'Bearer',
 			'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
-		]);
+		]); */
 	}
 
 	/**

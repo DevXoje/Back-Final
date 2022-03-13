@@ -27,7 +27,7 @@ class SignUpReq extends FormRequest
 		return [
 			'name' => 'required|string',
 			'email' => 'required|string|email|unique:auth',
-			'password' => 'required|string'
+			'password' => 'required|confirmed'
 		];
 	}
 

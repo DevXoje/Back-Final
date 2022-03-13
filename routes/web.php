@@ -1,12 +1,5 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CreateUserController;
-use App\Http\Controllers\DeleteUserController;
-use App\Http\Controllers\GetUserController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UpdateUserController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*

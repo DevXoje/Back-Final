@@ -1,11 +1,17 @@
 <?php
 
-namespace Database\Factories;
+namespace App\Infrastructure\Persistance\Product;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductEloquentFactory extends Factory
 {
+	/**
+	 * The name of the factory's corresponding model.
+	 *
+	 * @var string
+	 */
+	protected $model = ProductEloquent::class;
 	/**
 	 * Define the model's default state.
 	 *
