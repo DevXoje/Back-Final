@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 final class CustomerEloquent extends Authenticatable
 {
 	use /* HasApiTokens, */ HasFactory, Notifiable;
-	protected $table = "customer";
+	protected $table = "customers";
 	protected $primaryKey = "id";
 	public $incrementing = false;
 	protected $keyType = "string";
