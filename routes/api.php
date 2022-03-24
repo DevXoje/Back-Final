@@ -31,6 +31,7 @@ Route::get('product/{id}', [ProductController::class, "show"])->name('auth.show'
 
 Route::get('category', [CategoryController::class, "index"])->name('category');
 
+Route::get('cart/{id}', [CartController::class, "show"])->name('cart.show');
 Route::get('cart', [CartController::class, "index"])->name('cart');
 Route::get('order', [OrderController::class, "index"])->name('order');
 
