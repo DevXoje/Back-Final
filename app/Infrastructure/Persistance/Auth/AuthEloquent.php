@@ -45,4 +45,7 @@ final class AuthEloquent extends Authenticatable
 		//$user->record(new UserWasCreatedDomainEvent($id, $name, $password));
 		return $user;
 	}
+
+	
+
 }

@@ -23,7 +23,6 @@ class AuthSeeder extends Seeder
 				'email' => 'admin@gmail.com',
 				'password' => bcrypt('admin'),
 				'remember_token' => Str::random(10),
-				'role' => 'admin',
 			],
 		);
 		DB::table('auth')->insert(
@@ -32,7 +31,6 @@ class AuthSeeder extends Seeder
 				'email' => 'customer@gmail.com',
 				'password' => bcrypt('customer'),
 				'remember_token' => Str::random(10),
-				'role' => 'customer',
 			],
 		);
 	}

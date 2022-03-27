@@ -25,8 +25,8 @@ class ProductSeeder extends Seeder
 					'name' => 'Product ' . $i,
 					'description' => 'Product ' . $i . ' description',
 					'image' => 'pathImg',
-					'category' => $categories[rand(0, count($categories)-1)]->name,
 					'price' => 100 * $i,
+					'stock' => $i,
 				],
 			);
 		}

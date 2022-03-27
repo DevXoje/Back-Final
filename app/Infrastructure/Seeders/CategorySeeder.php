@@ -20,6 +20,7 @@ class CategorySeeder extends Seeder
                 [
                     'name' => 'Category_' . $i + 1,
                     'image' => 'https://source.unsplash.com/random/?tech',
+                    'description' => 'Description_' . $i + 1,
                 ],
             );
         }

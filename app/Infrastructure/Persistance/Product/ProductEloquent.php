@@ -14,34 +14,32 @@ final class ProductEloquent extends Authenticatable
 	use /* HasApiTokens, */ HasFactory, Notifiable;
 	protected $table = "product";
 	protected $primaryKey = "id";
-	public $incrementing = false;
-	protected $keyType = "string";
 	public $timestamps = false;
 
 
 	protected $fillable = [
 		'name',
-		'email',
-		'password',
 	];
 
 	protected $hidden = [
-		'password',
 		'remember_token',
 	];
-
 
 	protected $casts = [
 		'email_verified_at' => 'datetime',
 	];
 	public function __construct()
 	{
-		# code...
 	}
 	public static function create(int $id, string $name, string $password): self
 	{
 		$user = new self($id, $name, $password);
 		//$user->record(new UserWasCreatedDomainEvent($id, $name, $password));
 		return $user;
+	}
+
+	public function categories()
+	{
+		return $this->hasMany(CategoryEloquent::class);
 	}
 }

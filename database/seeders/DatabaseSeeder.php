@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Infrastructure\Seeders\{AuthSeeder, CartSeeder, CategorySeeder, CustomerSeeder, OrderSeeder, ProductSeeder};
-use App\Models\Order;
+use App\Infrastructure\Seeders\{AdminSeeder, AuthSeeder, CartSeeder, CategorySeeder, CustomerSeeder, OrderSeeder, ProductSeeder};
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,12 +15,17 @@ class DatabaseSeeder extends Seeder
   public function run()
   {
     $this->call([
+      // Access
+      AuthSeeder::class,
+      AdminSeeder::class,
+      CustomerSeeder::class,
+      //Items
       CategorySeeder::class,
       ProductSeeder::class,
-      AuthSeeder::class,
-      CustomerSeeder::class,
-      CartSeeder::class,
-      OrderSeeder::class
+      //ProductCategorySeeder::class,//Por hacer
+      // Sell
+      //CartSeeder::class,
+      //OrderSeeder::class
     ]);
   }
 }

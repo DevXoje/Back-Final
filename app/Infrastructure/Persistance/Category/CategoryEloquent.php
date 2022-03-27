@@ -9,4 +9,9 @@ class CategoryEloquent extends Model
 {
     use HasFactory;
     protected $table = "category";
+
+    public function product()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

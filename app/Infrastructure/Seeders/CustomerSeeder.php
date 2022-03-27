@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Seeders;
 
 use App\Infrastructure\Persistance\Auth\AuthEloquent;
+use App\Infrastructure\Persistance\Auth\Customer\CustomerEloquent;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,14 +16,8 @@ class CustomerSeeder extends Seeder
      */
     public function run()
     {
-        $auths = AuthEloquent::all();
-
-        for ($i = 0; $i < count($auths); $i++) {
-            DB::table('customers')->insert(
-                [
-                    'auth_id' => $auths[$i]->id,
-                ],
-            );
-        }
+        $auth = AuthEloquent::where('name', 'customer')->first();
+        $customer = new CustomerEloquent();
+        $customer->auth_id = $auth->id;
     }
 }

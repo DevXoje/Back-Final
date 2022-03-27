@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Seeders;
 
-use App\Infrastructure\Persistance\Customer\CustomerEloquent;
+use App\Infrastructure\Persistance\Auth\Customer\CustomerEloquent;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

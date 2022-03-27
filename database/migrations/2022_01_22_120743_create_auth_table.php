@@ -21,7 +21,6 @@ class CreateAuthTable extends Migration
 			$table->date('email_verified_at')->nullable();
 			$table->text("password");
 			$table->text("remember_token")->nullable();
-			$table->string("role")->default("customer");
 			$table->timestamps();
 		});
 	}
