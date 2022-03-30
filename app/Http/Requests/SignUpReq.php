@@ -25,9 +25,9 @@ class SignUpReq extends FormRequest
 	public function rules()
 	{
 		return [
-			'name' => 'required|string',
+			/* 'name' => 'required|string',
 			'email' => 'required|string|email|unique:auth',
-			'password' => 'required|confirmed'
+			'password' => 'required' */
 		];
 	}
 
@@ -39,9 +39,9 @@ class SignUpReq extends FormRequest
 	public function messages()
 	{
 		return [
-			'name.required' => 'The Title is Required',
+			/* 'name.required' => 'The Title is Required',
 			'email.min' => 'The Title must be At Least 5 characters',
-			'password.required' => 'The Content is Required',
+			'password.required' => 'The Content is Required', */
 		];
 	}
 }

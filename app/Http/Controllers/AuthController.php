@@ -21,15 +21,16 @@ class AuthController extends Controller
 	/**
 	 * Registro de usuario
 	 */
-	public function signUp(SignUpReq $request)
+	public function signup(SignUpReq $request)
 	{
+
 		$user = new AuthEloquent();
-		$hasData = $request->has('name') && $request->has('email') && $request->has('password');
+		$hasData = $request->has('name') && $request->has('user_name') && $request->has('password');
 		if ($hasData) {
 			$user->name = $request->name;
-			$user->email = $request->email;
+			$user->user_name = $request->user_name;
 			$user->password = bcrypt($request->password);
-			$user->remember_token = $user->createToken('authToken')->accessToken;
+			#$user->remember_token = $user->createToken('authToken')->accessToken;
 		}
 		/*$request->validate();
 

@@ -39,12 +39,12 @@ final class AuthEloquent extends Authenticatable
 	{
 		# code...
 	}
-	public static function create(int $id, string $name, string $password): self
+	/* public static function create(int $id, string $name, string $password): self
 	{
 		$user = new self($id, $name, $password);
 		//$user->record(new UserWasCreatedDomainEvent($id, $name, $password));
 		return $user;
-	}
+	} */
 
 	
 

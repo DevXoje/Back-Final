@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Route::get('auth', [AuthController::class, "index"])->name('auth');
 Route::get('auth/{id}', [AuthController::class, "show"])->name('auth.show');
-Route::post('auth/signup', [AuthController::class, "signUp"])->name('auth.signUp');
+Route::post('auth/signup', [AuthController::class, "signup"])->name('auth.signup');
 
 Route::post('auth/login', [AuthController::class, "login"])->name('auth.login');
 

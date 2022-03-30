@@ -20,7 +20,7 @@ class AuthSeeder extends Seeder
 		DB::table('auth')->insert(
 			[
 				'name' => 'admin',
-				'email' => 'admin@gmail.com',
+				'user_name' => 'admin@gmail.com',
 				'password' => bcrypt('admin'),
 				'remember_token' => Str::random(10),
 			],
@@ -28,7 +28,7 @@ class AuthSeeder extends Seeder
 		DB::table('auth')->insert(
 			[
 				'name' => 'customer',
-				'email' => 'customer@gmail.com',
+				'user_name' => 'customer@gmail.com',
 				'password' => bcrypt('customer'),
 				'remember_token' => Str::random(10),
 			],

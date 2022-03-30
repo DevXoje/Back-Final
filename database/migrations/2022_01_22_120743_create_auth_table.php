@@ -17,7 +17,7 @@ class CreateAuthTable extends Migration
 		Schema::create("auth", function (Blueprint $table) {
 			$table->id();
 			$table->string("name");
-			$table->string("email", 60)->unique();
+			$table->string("user_name", 60)->unique();
 			$table->date('email_verified_at')->nullable();
 			$table->text("password");
 			$table->text("remember_token")->nullable();
