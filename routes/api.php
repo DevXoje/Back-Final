@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\{AuthController, CartController, CategoryController, OrderController, ProductCategoriesController, ProductController};
-#use BoundedContent\Tienda\Product\Infrastructure\Eloquent\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

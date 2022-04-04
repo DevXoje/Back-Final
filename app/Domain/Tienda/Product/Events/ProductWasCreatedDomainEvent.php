@@ -3,7 +3,6 @@
 namespace App\Domain\Tienda\Product\Events;
 
 use App\Domain\Tienda\Product;
-use BoundedContent\User\Domain\ValueObjects\{UserId, UserName, UserPassword};
 
 class ProductWasCreatedDomainEvent
 {

@@ -45,6 +45,17 @@ final class AuthEloquent extends Authenticatable
 		//$user->record(new UserWasCreatedDomainEvent($id, $name, $password));
 		return $user;
 	} */
+	static function create(string $name, string $user_name, string $password): self
+	{
+		$user = new self();
+		$user->name = $name;
+		$user->user_name = $user_name;
+		$user->password = bcrypt($password);
+		//$user->remember_token = $user->createToken('authToken')->accessToken;
+		$user->save();
+		return $user;
+	}
+	
 
 	
 

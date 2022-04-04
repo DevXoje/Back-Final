@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace BoundedContent\User\Domain\Exceptions;
+namespace App\Domain\Tienda\Auth\Exceptions;
 
-use BoundedContent\User\Domain\ValueObjects\UserId;
-use BoundedContent\Shared\DomainError;
+use App\Domain\Shared\DomainError;
 
 final class UserNotExist extends DomainError
 {
-	public function __construct(private UserId $id)
+	public function __construct(int $id)
 	{
 		parent::__construct();
 	}
@@ -21,6 +20,6 @@ final class UserNotExist extends DomainError
 
 	protected function errorMessage(): string
 	{
-		return sprintf('The User <%s> does not exist', $this->id->value());
+		return sprintf('The User <%s> does not exist', $this->id);
 	}
 }

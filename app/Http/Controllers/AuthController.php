@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Tienda\Customer\Customer;
 use App\Http\Requests\{LoginReq, SignUpReq};
 use App\Infrastructure\Persistance\Auth\AuthEloquent;
+use App\Infrastructure\Persistance\Auth\Customer\CustomerEloquent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,15 +25,16 @@ class AuthController extends Controller
 	 */
 	public function signup(SignUpReq $request)
 	{
-
-		$user = new AuthEloquent();
 		$hasData = $request->has('name') && $request->has('user_name') && $request->has('password');
 		if ($hasData) {
-			$user->name = $request->name;
-			$user->user_name = $request->user_name;
-			$user->password = bcrypt($request->password);
+			$user = AuthEloquent::create($request->name, $request->user_name, $request->password);
+			if ($user->id) {
+				$customer = CustomerEloquent::create($user->id);
+			}
 			#$user->remember_token = $user->createToken('authToken')->accessToken;
 		}
+		
+		
 		/*$request->validate();
 
 		 $user = AuthEloquent::create(
@@ -44,8 +47,8 @@ class AuthController extends Controller
 
 
 		#return response()->json(['message' => 'Successfully created user!'], 201);
-		return $user->save() ? response([
-			'user' => $user,
+		return $customer ? response([
+			'customer' => $customer,
 			'access_tokken' => $user->remember_token,
 		]) : response(['message' => 'Error al crear el usuario'], 500);
 	}

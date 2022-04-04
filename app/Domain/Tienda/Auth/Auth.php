@@ -3,7 +3,6 @@
 namespace App\Domain\Tienda\Auth;
 
 use App\Domain\Tienda\Auth\Events\AuthWasCreatedDomainEvent;
-use BoundedContent\User\Domain\ValueObjects\{UserId, UserName, UserPassword};
 
 final class Auth
 {
