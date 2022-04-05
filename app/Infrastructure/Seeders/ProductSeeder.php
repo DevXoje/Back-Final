@@ -24,7 +24,8 @@ class ProductSeeder extends Seeder
 				[
 					'name' => 'Product ' . $i,
 					'description' => 'Product ' . $i . ' description',
-					'image' => 'pathImg',
+					'main_image' => 'pathImg',
+					'images' => '[image,image]',/* guarrada */
 					'price' => 100 * $i,
 					'stock' => $i,
 				],
