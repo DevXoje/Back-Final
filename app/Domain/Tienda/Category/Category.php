@@ -4,7 +4,7 @@ namespace App\Domain\Tienda;
 
 use App\Domain\Tienda\Product\Events\ProductWasCreatedDomainEvent;
 
-final class Product
+final class Category
 {
 	/**
 	 * The attributes that are mass assignable.

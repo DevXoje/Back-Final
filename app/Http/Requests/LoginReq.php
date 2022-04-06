@@ -26,7 +26,7 @@ class LoginReq extends FormRequest
 	public function rules()
 	{
 		return [
-			'email' => 'required|string',
+			'user_name' => 'required|string',
 			'password' => 'required|string',
 		];
 	}

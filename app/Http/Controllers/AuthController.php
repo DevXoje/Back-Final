@@ -56,22 +56,24 @@ class AuthController extends Controller
 	/**
 	 * Inicio de sesión y creación de token
 	 */
+	//public function login(LoginReq $loginReq)
 	public function login(LoginReq $loginReq)
 	{
 		#$request->validate();
-		$credentials = $loginReq->only('email', 'password');
+
+		$credentials = $loginReq->only('user_name', 'password');
 		$message = "";
 		$code = 200;
 
 		if (Auth::attempt($credentials)) {
-			request()->session()->regenerate();
+			//request()->session()->regenerate();
 			$message = "Successfully logged in";
 			$code = 200;
 		} else {
 			$message = "Error al iniciar sesión";
 			$code = 401;
 		}
-		return Auth::user();
+		return AuthEloquent::find(Auth::id());
 
 		/* if (!Auth::attempt($credentials))
 			return response()->json([
