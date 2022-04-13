@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\{AuthController, CartController, CategoryController, OrderController, ProductCategoriesController, ProductController};
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,43 +15,34 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::get('/', function () {
-	return "<h1>Welcome to the API</h1>";
+    return view('welcome');
 });
 
-Route::get('auth', [AuthController::class, "index"])->name('auth');
-Route::get('auth/{id}', [AuthController::class, "show"])->name('auth.show');
-Route::post('auth/signup', [AuthController::class, "signup"])->name('auth.signup');
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+// Works
+/* Route::post('login', [ApiController::class, 'authenticate'])->name('login');
+Route::post('auth/create', [ApiController::class, 'register'])->name('register'); */
 
-Route::post('auth/login', [AuthController::class, "login"])->name('auth.login');
-
-Route::get('product', [ProductController::class, "index"])->name('product');
-Route::get('product/{id}', [ProductController::class, "show"])->name('auth.show');
-
-Route::get('category', [CategoryController::class, "index"])->name('category');
-
-
-
-Route::get('category_product', [ProductCategoriesController::class, "index"])->name('category_product');
-
-Route::get('cart/{id}', [CartController::class, "show"])->name('cart.show');
-Route::get('cart', [CartController::class, "index"])->name('cart');
-Route::get('order', [OrderController::class, "index"])->name('order');
-
-
-
-
-/* Route::group([
-	'prefix' => 'auth'
-], function () {
-	Route::post('login', [AuthController::class, "login"]);
-	Route::post('signup', [AuthController::class, "signup"]);
-
-	Route::group([
-		'middleware' => 'auth:api'
-	], function () {
-		Route::get('logout', 'AuthController@logout');
-		Route::get('user', 'AuthController@user');
-	});
+/* Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('logout', [ApiController::class, 'logout']);
+    Route::get('get_user', [ApiController::class, 'get_user']);
+    Route::get('products', [ProductController::class, 'index']);
+    Route::get('products/{id}', [ProductController::class, 'show']);
+    Route::post('create', [ProductController::class, 'store']);
+    Route::put('update/{product}',  [ProductController::class, 'update']);
+    Route::delete('delete/{product}',  [ProductController::class, 'destroy']);
 }); */
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+});
