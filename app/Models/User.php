@@ -13,39 +13,50 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
     /**
-     * The attributes that are mass assignable.
+     * The attributes excluded from mass assignment.
      *
      * @var array
      */
+    /*     protected $guarded = array("id");
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
-        'password',
         'remember_token',
+        "password",
+        "created_at",
+        "update_at"
     ];
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
-    ];
+        "created_at" => "datetime",
+        "update_at" => "datetime"
+    ]; */
 
+    protected $primaryKey = "id";
+
+    /**
+     * The attributes *explicitly* included for mass assignment.
+     *
+     * @var array
+     */
+    protected $fillable = array('name', 'email', 'password','role');
+    protected $hidden = ['password', 'remember_token'];
+/*     protected $with = ['role'];
+
+    public function role()
+    {
+        return $this->morphTo();
+    } */
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
      */
-    public function getJWTIdentifier() {
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
     }
     /**
@@ -53,7 +64,18 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims() {
+    public function getJWTCustomClaims()
+    {
         return [];
+    }
+
+    # To make it easy to know what type of user role we are dealing
+    public function getHasAdminRoleAttribute()
+    {
+        return $this->role == Admin::class;
+    }
+    public function getHasCustomerRoleAttribute()
+    {
+        return $this->role == Customer::class;
     }
 }
