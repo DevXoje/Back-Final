@@ -68,7 +68,7 @@ class OrderItemController extends Controller
         ]);
         $order->amount += $product->price * $quantity;
         $order->save();
-        return response()->json($order->orderItems, 201);
+        return response()->json($order, 201);
     }
 
 

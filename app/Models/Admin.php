@@ -11,7 +11,8 @@ class Admin extends Model
 
     protected $table = "admins";
     protected $guard = 'admin';
-
+    protected $primaryKey = "id";
+    protected $autoincrement = true;
     /* public function role()
     {
         return $this->hasOne(User::class,'id');

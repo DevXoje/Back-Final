@@ -64,9 +64,11 @@ Route::apiResource(
 )->only(['index', 'show']);
 
 Route::apiResources(
-    ['customers' => CustomerController::class],
-    ['orders' => OrderController::class],
-    ['orders/{orderId}/items' => OrderItemController::class]
+    [
+        'customers' => CustomerController::class,
+        'orders' => OrderController::class,
+        'orders/{orderId}/items' => OrderItemController::class
+    ]
 );
 
 Route::get('/customers/{customer_id}/orders', [CustomerController::class, 'orders']);
