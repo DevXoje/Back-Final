@@ -58,24 +58,22 @@ Route::group([
     )->except(['index', 'show']);
 });
 
-
-
 Route::apiResource(
     'products',
     ProductController::class
 )->only(['index', 'show']);
-Route::apiResource(
-    'orders',
-    OrderController::class
+
+Route::apiResources(
+    ['customers' => CustomerController::class],
+    ['orders' => OrderController::class],
+    ['orders/{orderId}/items' => OrderItemController::class]
 );
 
-Route::apiResource(
-    'orders/{orderId}/items',
-    OrderItemController::class
-);
+Route::get('/customers/{customer_id}/orders', [CustomerController::class, 'orders']);
+Route::get('/customers/{customer_id}/orders/last', [CustomerController::class, 'lastOrder']);
+Route::get('/customers/{customer_id}/orders/{order_id}', [CustomerController::class, 'order']);
 
 
 
 
 /* Route::post('/order/{id}/add', [OrderItemController::class, 'store']); */
-

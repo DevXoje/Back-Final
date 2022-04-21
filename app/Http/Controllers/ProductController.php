@@ -23,7 +23,7 @@ class ProductController extends Controller
         $products = Product::all();
 
         if ($products) {
-            $payload = ['data' => $products];
+            $payload = $products;
         } else {
             $code = 200;
         }
@@ -55,7 +55,7 @@ class ProductController extends Controller
         $payload = ['message' => $message];
         $product = Product::find($id);
         if ($product) {
-            $payload = ['data' => $product];
+            $payload =  $product;
         } else {
             $code = 400;
         }
