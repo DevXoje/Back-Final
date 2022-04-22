@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -31,6 +32,8 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+        //$user = User::where('email', '=', $request->email)->first();
+        //if (!$token = JWTAuth::fromUser($user, ['user_id' => $user->id]))
         if (!$token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
@@ -107,4 +110,20 @@ class AuthController extends Controller
             'user' => auth()->user()
         ]);
     }
+
+
+    public function show(int $id)
+    {
+        $code = 200;
+        $message = "Product not found";
+        $payload = ['message' => $message];
+        $user = User::find($id);
+        if ($user) {
+            $payload =  $user;
+        } else {
+            $code = 400;
+        }
+        return response()->json($payload, $code);
+    }
+
 }

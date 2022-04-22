@@ -25,7 +25,7 @@ class OrderItemController extends Controller
         $orderItems = $order->orderItems;
 
         if ($orderItems) {
-            $payload = ['data' => $orderItems];
+            $payload =  $orderItems;
             $code = 200;
         }
         return response()->json($payload, $code);
@@ -45,7 +45,7 @@ class OrderItemController extends Controller
         $orderItem = $order->orderItems->find($orderItem_id);
 
         if ($orderItem) {
-            $payload = ['data' => $orderItem];
+            $payload = $orderItem;
             $code = 200;
         }
         return response()->json($payload, $code);

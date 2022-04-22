@@ -67,7 +67,8 @@ Route::apiResources(
     [
         'customers' => CustomerController::class,
         'orders' => OrderController::class,
-        'orders/{orderId}/items' => OrderItemController::class
+        'orders/{orderId}/items' => OrderItemController::class,
+        'users'=> AuthController::class,
     ]
 );
 
