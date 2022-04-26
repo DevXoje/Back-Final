@@ -70,7 +70,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    # To make it easy to know what type of user role we are dealing
+/*     # To make it easy to know what type of user role we are dealing
     public function getHasAdminRoleAttribute()
     {
         return $this->role == Admin::class;
@@ -78,5 +78,5 @@ class User extends Authenticatable implements JWTSubject
     public function getHasCustomerRoleAttribute()
     {
         return $this->role == Customer::class;
-    }
+    } */
 }

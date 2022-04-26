@@ -45,7 +45,7 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    Route::get('/profile', [CustomerController::class, 'profile']);
 });
 Route::group([
     'middleware' => 'api',
@@ -68,7 +68,7 @@ Route::apiResources(
         'customers' => CustomerController::class,
         'orders' => OrderController::class,
         'orders/{orderId}/items' => OrderItemController::class,
-        'users'=> AuthController::class,
+        'users' => AuthController::class,
     ]
 );
 

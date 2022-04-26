@@ -6,7 +6,7 @@ use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 
-class CustomerController extends Controller
+class CustomerController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,11 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return Customer::all();
+        $customers = Customer::all();
+        if (!$customers) {
+            return $this->errorResponse('No customers found', 404);
+        }
+        return $this->successResponse('Customers successfully fetched', $customers);
     }
 
     /**
@@ -37,16 +41,10 @@ class CustomerController extends Controller
      */
     public function show(int $id)
     {
-        $code = 200;
-        $message = "Product not found";
-        $payload = ['message' => $message];
-        $product = Customer::find($id);
-        if ($product) {
-            $payload =  $product;
-        } else {
-            $code = 400;
+        if (!$customer = Customer::find($id)) {
+            return $this->errorResponse(['error' => 'Customer Not Found'], 404);
         }
-        return response()->json($payload, $code);
+        return $this->successResponse('Customer successfully retrieved.', $customer);
     }
 
 
@@ -71,34 +69,41 @@ class CustomerController extends Controller
      */
     public function destroy(int $id)
     {
-        $product = Customer::find($id);
-        $code = 404;
-        $messageNotFound = "Customer not found";
-        $messageFounded = "Customer " . $id . " deleted";
-        $payload = ['message' => ''];
-        if (!$product) {
-            $payload = ['message' => $messageNotFound];
-            $code = 404;
-        } else {
-            $product->delete();
-            $payload = ['message' => $messageFounded];
-            $code = 204;
+        if (!$customer = Customer::find($id)) {
+            return $this->errorResponse(['error' => 'Customer Not Found'], 404);
         }
-        return response()->json($payload, $code);
+        $customer->delete();
+        return $this->successResponse('Customer successfully deleted.', $customer);
     }
 
     public function orders(int $customer_id)
     {
-        /* $orders=new OrderController();
-        return $orders->show($customer_id); */
-        return Customer::find($customer_id)->orders;
+        if (!$orders = Customer::find($customer_id)->orders) {
+            return $this->errorResponse('No orders found', 404);
+        }
+        return $this->successResponse('Orders successfully fetched', $orders);
     }
     public function order(int $customer_id, int $order_id)
     {
-        return Customer::find($customer_id)->orders()->find($order_id);
+
+        if (!$order = Customer::find($customer_id)->orders()->find($order_id)) {
+            return $this->errorResponse('No order found', 404);
+        }
+        return $this->successResponse('Order successfully fetched', $order);
     }
     public function lastOrder(int $customer_id)
     {
-        return Customer::find($customer_id)->orders()->latest()->first();
+        if (!$lastOrder = Customer::find($customer_id)->orders()->latest()->first()) {
+            return $this->errorResponse('No order found', 404);
+        }
+        return $this->successResponse('Last order successfully fetched', $lastOrder);
+    }
+    public function profile()
+    {
+        //return auth()->user();
+        if (!$userProfile = auth()->user()) {
+            return $this->errorResponse('No User found', 404);
+        }
+        return $this->successResponse('User Profile successfully fetched', $userProfile);
     }
 }

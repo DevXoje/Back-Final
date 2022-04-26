@@ -66,7 +66,7 @@ class OrderItemController extends Controller
             'quantity' => $quantity,
             'amount' => $product->price * $quantity,
         ]);
-        $order->amount += $product->price * $quantity;
+        $order->amount += $product->price * $quantity; //Mejorable con un trigger
         $order->save();
         return response()->json($order, 201);
     }

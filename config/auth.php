@@ -48,14 +48,14 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-        'admin' => [
+/*         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
         ],
         'customer' => [
             'driver' => 'session',
             'provider' => 'customers',
-        ],
+        ], */
     ],
 
     /*

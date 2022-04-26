@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class AuthController extends Controller
+class AuthController extends ApiController
 {
     /**
      * Create a new AuthController instance.
@@ -23,7 +24,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(Request $request, string $extraAction = "")
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -35,9 +36,31 @@ class AuthController extends Controller
         //$user = User::where('email', '=', $request->email)->first();
         //if (!$token = JWTAuth::fromUser($user, ['user_id' => $user->id]))
         if (!$token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            //return response()->json(['error' => 'Unauthorized'], 401);
+            return $this->errorResponse(['error' => 'Unauthorized'], 403);
         }
-        return $this->createNewToken($token);
+        $user = Auth::user();
+        /*$response['token'] =  $user->createToken($request->device_name)->plainTextToken;
+            $response['name'] =  $user->name;*/
+        $response = [
+            'token' => $token,
+            'name' => $user->name
+        ];
+        
+        return $this->successResponse('User successfully ' . $extraAction . ' logged-in.', $response);
+        //return $this->createNewToken($token);
+
+        /* if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::user();
+
+            $response['token'] =  $user->createToken($request->device_name)->plainTextToken;
+            $response['name'] =  $user->name;
+
+            return $this->successResponse('User successfully logged-in.', $response);
+        }
+        else {
+            return $this->errorResponse('Unauthorized.', ['error'=>'Unauthorized'], 403);
+        }  */
     }
     /**
      * Register a User.
@@ -52,18 +75,26 @@ class AuthController extends Controller
             'password' => 'required|string|confirmed|min:6',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return $this->errorResponse('Validation error.', $validator->errors(), 400);
+            //return response()->json($validator->errors()->toJson(), 400);
         }
-        $user = User::create(array_merge(
+        $data = array_merge(
             $validator->validated(),
             ['password' => bcrypt($request->password)]
-        ));
+        );
+        $user = User::create($data);
+        return $this->login($request, 'registered');
+        /* $response = [
+            'token' => $user->createNewToken(),
+            'name' => $user->name
+        ];
+        return $this->successResponse('User created successfully.', $response);
         //$customer = $user->customer()->create();
         return response()->json([
             'message' => 'User successfully registered',
             'user' => $user,
             //'customer' => $customer,
-        ], 201);
+        ], 201); */
     }
 
     /**
@@ -73,8 +104,12 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        /*    if (auth()->check()) {
+            return $this->errorResponse('Failed to logout.', ['error' => 'Failed to logout.'], 500);
+        } */
+
         auth()->logout();
-        return response()->json(['message' => 'User successfully signed out']);
+        return $this->successResponse('User successfully logged-out.', ['message' => 'User successfully logged-out.']);
     }
     /**
      * Refresh a token.
@@ -125,5 +160,4 @@ class AuthController extends Controller
         }
         return response()->json($payload, $code);
     }
-
 }
