@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Http\Resources\CustomerResource;
+use App\Http\Resources\OrderResource;
 
 class CustomerController extends ApiController
 {
@@ -15,8 +17,7 @@ class CustomerController extends ApiController
      */
     public function index()
     {
-        $customers = Customer::all();
-        if (!$customers) {
+        if (!$customers = CustomerResource::collection(Customer::all())) {
             return $this->errorResponse('No customers found', 404);
         }
         return $this->successResponse('Customers successfully fetched', $customers);
@@ -41,7 +42,7 @@ class CustomerController extends ApiController
      */
     public function show(int $id)
     {
-        if (!$customer = Customer::find($id)) {
+        if (!$customer = new CustomerResource(Customer::find($id))) {
             return $this->errorResponse(['error' => 'Customer Not Found'], 404);
         }
         return $this->successResponse('Customer successfully retrieved.', $customer);
@@ -78,7 +79,7 @@ class CustomerController extends ApiController
 
     public function orders(int $customer_id)
     {
-        if (!$orders = Customer::find($customer_id)->orders) {
+        if (!$orders =  OrderResource::collection(Customer::find($customer_id)->orders)) {
             return $this->errorResponse('No orders found', 404);
         }
         return $this->successResponse('Orders successfully fetched', $orders);
@@ -86,14 +87,14 @@ class CustomerController extends ApiController
     public function order(int $customer_id, int $order_id)
     {
 
-        if (!$order = Customer::find($customer_id)->orders()->find($order_id)) {
+        if (!$order = new OrderResource(Customer::find($customer_id)->orders()->find($order_id))) {
             return $this->errorResponse('No order found', 404);
         }
         return $this->successResponse('Order successfully fetched', $order);
     }
     public function lastOrder(int $customer_id)
     {
-        if (!$lastOrder = Customer::find($customer_id)->orders()->latest()->first()) {
+        if (!$lastOrder =  new OrderResource(Customer::find($customer_id)->orders()->latest()->first())) {
             return $this->errorResponse('No order found', 404);
         }
         return $this->successResponse('Last order successfully fetched', $lastOrder);
@@ -104,6 +105,7 @@ class CustomerController extends ApiController
         if (!$userProfile = auth()->user()) {
             return $this->errorResponse('No User found', 404);
         }
-        return $this->successResponse('User Profile successfully fetched', $userProfile);
+        $customer = new CustomerResource(Customer::find($userProfile->id));
+        return $this->successResponse('User Profile successfully fetched', $customer);
     }
 }

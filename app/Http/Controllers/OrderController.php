@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\DB;
 
-class OrderController extends Controller
+class OrderController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -50,7 +51,10 @@ class OrderController extends Controller
      */
     public function show(int $id)
     {
-        return Order::findOrFail($id);
+        if (!$order = new OrderResource(Order::find($id))) {
+            return $this->errorResponse(['error' => 'Order Not Found'], 404);
+        }
+        return $this->successResponse('Order successfully retrieved.', $order);
     }
 
 
@@ -79,8 +83,7 @@ class OrderController extends Controller
 
     public function items(int $id)
     {
-        $order= Order::findOrFail($id);
+        $order = Order::findOrFail($id);
         return $order->orderItems;
     }
-
 }

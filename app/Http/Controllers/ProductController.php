@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductController extends ApiController
 {
 
     /**
@@ -17,17 +17,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $code = 200;
-        $message = "Product not found";
-        $payload = ['message' => $message];
-        $products = Product::all();
-
-        if ($products) {
-            $payload = $products;
-        } else {
-            $code = 200;
+        $product = Product::all();
+        if (!$product) {
+            return $this->errorResponse('No product found', 404);
         }
-        return response()->json($payload, $code);
+        return $this->successResponse('Product successfully fetched', $product);
     }
 
     /**

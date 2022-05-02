@@ -44,9 +44,9 @@ class AuthController extends ApiController
             $response['name'] =  $user->name;*/
         $response = [
             'token' => $token,
-            'name' => $user->name
+            'auth' => $user
         ];
-        
+
         return $this->successResponse('User successfully ' . $extraAction . ' logged-in.', $response);
         //return $this->createNewToken($token);
 
