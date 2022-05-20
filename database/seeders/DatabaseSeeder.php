@@ -4,22 +4,25 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        $this->call([
-            //UserSeeder::class,
-            CustomerSeeder::class,
-            AdminSeeder::class,
-            ProductSeeder::class,
-            //OrderSeeder::class,
-            OrderItemSeeder::class,
-        ]);
-    }
+	/**
+	 * Seed the application's database.
+	 *
+	 * @return void
+	 */
+	public function run()
+	{
+
+		$this->call([
+			CustomerSeeder::class,
+			ProductSeeder::class,
+			OrderSeeder::class,
+			//InvoiceSeeder::class,
+		]);
+
+	}
+
+
 }

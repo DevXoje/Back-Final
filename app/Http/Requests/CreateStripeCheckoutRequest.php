@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProductRequest extends FormRequest
+class CreateStripeCheckoutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,14 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|min:3",
-			"description" => "required|min:10",
-			"price" => "required|numeric",
-			"stock" => "required|numeric",
+            //
+
+            "payment_method_types"=>"required",
+            "line_items"=>"required",
+            
+            "success_url"=>"required",
+            "cancel_url"=>"required",
+            "mode"=>"required",
         ];
     }
 }

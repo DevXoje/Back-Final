@@ -12,32 +12,16 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
+
     /**
      * The attributes excluded from mass assignment.
      *
      * @var array
      */
-    /*     protected $guarded = array("id");
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-    protected $hidden = [
-        'remember_token',
-        "password",
-        "created_at",
-        "update_at"
-    ];
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        "created_at" => "datetime",
-        "update_at" => "datetime"
-    ]; */
 
     protected $primaryKey = "id";
     protected $autoincrement = true;
-
+	protected $role="customer";
     /**
      * The attributes *explicitly* included for mass assignment.
      *
@@ -45,12 +29,15 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = array('name', 'email', 'password','role');
     protected $hidden = ['password', 'remember_token'];
-/*     protected $with = ['role'];
 
-    public function role()
-    {
-        return $this->morphTo();
-    } */
+
+
+
+
+
+
+	// JWT
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -70,13 +57,5 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-/*     # To make it easy to know what type of user role we are dealing
-    public function getHasAdminRoleAttribute()
-    {
-        return $this->role == Admin::class;
-    }
-    public function getHasCustomerRoleAttribute()
-    {
-        return $this->role == Customer::class;
-    } */
+
 }

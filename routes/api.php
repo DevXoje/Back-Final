@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\ApiController;
-use App\Http\Controllers\{AuthController, CartController, ProductController, CustomerController, OrderController, OrderItemController};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+@include(__DIR__ . '/stripe/stripe.php');
+@include(__DIR__ . '/shop/shop.php');
+@include(__DIR__ . '/login/login.php');
+@include(__DIR__ . '/customer/customer.php');
+@include(__DIR__ . '/admin/admin.php');
+
+
+// Default route
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+	return $request->user();
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+
+
 // Works
 /* Route::post('login', [ApiController::class, 'authenticate'])->name('login');
 Route::post('auth/create', [ApiController::class, 'register'])->name('register'); */
@@ -36,47 +43,3 @@ Route::post('auth/create', [ApiController::class, 'register'])->name('register')
     Route::put('update/{product}',  [ProductController::class, 'update']);
     Route::delete('delete/{product}',  [ProductController::class, 'destroy']);
 }); */
-
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/profile', [CustomerController::class, 'profile']);
-});
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'admin'
-], function ($router) {
-    Route::get('/users', [CustomerController::class, 'index']);
-    Route::apiResource(
-        'products',
-        ProductController::class
-    )->except(['index', 'show']);
-});
-
-Route::apiResource(
-    'products',
-    ProductController::class
-)->only(['index', 'show']);
-
-Route::apiResources(
-    [
-        'customers' => CustomerController::class,
-        'orders' => OrderController::class,
-        'orders/{orderId}/items' => OrderItemController::class,
-        'users' => AuthController::class,
-    ]
-);
-
-Route::get('/customers/{customer_id}/orders', [CustomerController::class, 'orders']);
-Route::get('/customers/{customer_id}/orders/last', [CustomerController::class, 'lastOrder']);
-Route::get('/customers/{customer_id}/orders/{order_id}', [CustomerController::class, 'order']);
-
-
-
-
-/* Route::post('/order/{id}/add', [OrderItemController::class, 'store']); */
